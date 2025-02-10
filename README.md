@@ -1,2 +1,2 @@
-# Face-Rotation-Detection
-# Author: [Yashraj MOdani ]
+# Face-Rotation-Classification
+
