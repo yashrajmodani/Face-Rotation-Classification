@@ -1,2 +1,2 @@
 # Face-Rotation-Detection
-# Author: [Your Name]
+# Author: [Yashraj MOdani ]
