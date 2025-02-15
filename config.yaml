@@ -1,0 +1,67 @@
+#augmentations to use 
+augmentation:
+  blur_radius: 5                # Increased blur radius
+  color_jitter: [0.4, 0.4, 0.4, 0.1]  # Enhanced color jitter
+  crop_scale: [0.9, 1.0]        # Less aggressive cropping
+  noise_intensity: 0.05         # Reduced noise
+
+optimizer: "sgd"
+
+face_detection:
+  enabled: true
+  orig_dir: "./data/celeba_raw"
+  cropped_dir: "./data/celeba_cropped"
+  max_faces: 10            # Max images to process
+  min_face_size: 48          # Minimum face size to consider
+  jitter_factor: 0.05        # Bounding box jitter
+  detection_thresholds: [0.6, 0.7, 0.7]
+
+# Model Configuration
+model_name: "resnet34"
+num_classes: 4
+batch_size: 32
+learning_rate: 0.001
+epochs: 50
+image_size: 224
+
+# Dataset Sampling Controls: If these are specified, only that many images will be randomly selected.
+max_train_images: 50000
+max_test_images: 7000
+
+# System
+num_workers: 0
+use_cuda: true           # cuda control on system
+process_type: 2          # 1.preprocess  2.train  3.test  4.face_detect  5.visualize
+
+# Augmentation Mode: "preprocessed" or "on_the_fly"
+augmentation_mode: "on_the_fly"  
+
+# Preprocessed Mode Settings
+reg_dir: "./data/celeba_reg"
+orig_dir: "./data/celeba_cropped"
+# output_dir: "./data/celeba_cropped"
+
+# Augmentation Control
+max_source_images: 100          # Input control
+versions_per_image: 1           # Augmentations per image
+max_per_class: 25               # Output control per class
+
+# On-the-Fly Mode Settings
+train_dir: "./data/celeba_raw"
+test_dir: "./data/test"
+
+# Model Saving Configuration
+model_saving:
+  save_dir: "./saved_models"
+  save_frequency: "epoch"         # Options: "epoch", "best", "both"
+  filename_format: "{model_name}_epoch{epoch:03d}_valacc{val_acc:.2f}_{timestamp}"
+  metrics_to_include: ["val_acc", "train_loss"]
+  archive_format: "pth"           # Options: "pth", "pt", "onnx"
+  save_metadata: true
+  metadata_fields:
+    - "model_name"
+    - "batch_size"
+    - "learning_rate"
+    - "image_size"
+    - "augmentation_mode"
+
